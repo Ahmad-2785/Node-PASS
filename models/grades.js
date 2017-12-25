@@ -20,7 +20,7 @@ const GradeSchema = new Schema({
     },
     homeworkState:{
         type : String,
-        default : '未繳交'
+        default : 'Not Upload'
     },
     homeworkName:{
         type : String 

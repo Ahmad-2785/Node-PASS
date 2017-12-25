@@ -2,18 +2,18 @@
 <% include studentHeader.ejs %>
 <div class="container services">
 <div class="jumbotron" >
-<h1><%= title %></h1>        
+<h2><strong><%= title %></strong></h2>        
 </div>
     <table class="bordered">
         <thead>
             <tr>
-                <th>作業名稱</th>
-                <th>上傳情形</th>
-                <th>繳交期限</th>
-                <th>繳交時間</th>
-                <th>作業成績</th>   
-                <th>逾時補交</th>    
-                <th>上傳</th>   
+                <th>Homework Name</th>
+                <th>Upload State</th>
+                <th>Due Date</th>
+                <th>Submit Time</th>
+                <th>Score</th>   
+                <th>Can Be Delayed</th>    
+                <th>Upload Homework</th>   
             </tr>
         </thead>   
         <tbody>
@@ -24,8 +24,8 @@
                 <td id="dueDate_<%= result.homeworks[i].homeworkName %>"><%= result.homeworks[i].dueDate %></td>
                 <td id="submitTime_<%= result.homeworks[i].homeworkName %>"><%= result.grades[i].submitTime %></td>
                 <td id="homeworkGrade_<%= result.homeworks[i].homeworkName %>"><%= result.grades[i].homeworkGrade %></td>
-                <td ><%= result.homeworks[i].dueDateExtension ? "可以補交" : "不可補交" %></td>
-                <td><a class="btn btn-info" id="uploadhomework_<%= result.homeworks[i].homeworkName %>" href="/listHomework/uploadHomework?homework_uuid=<%= result.homeworks[i]._id %>&studentID=<%= result.studentID %>" >上傳作業</a></td>                                       
+                <td ><%= result.homeworks[i].dueDateExtension ? "Yes" : "No" %></td>
+                <td><a class="btn btn-info" id="uploadhomework_<%= result.homeworks[i].homeworkName %>" href="/listHomework/uploadHomework?homework_uuid=<%= result.homeworks[i]._id %>&studentID=<%= result.studentID %>" >Upload</a></td>                                       
             </tr>
             <% } %>             
         </tbody>

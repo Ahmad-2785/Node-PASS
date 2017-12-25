@@ -47,7 +47,7 @@ router.get('/uploadHomework', function(req, res){
     result.homework = homework
     result.homework["canUpload"] = canUpload
     if(!canUpload){
-      req.flash('msg','上傳截止');
+      req.flash('msg','End to upload');
       res.locals.messages = req.flash();
     }
     return homework
@@ -57,7 +57,11 @@ router.get('/uploadHomework', function(req, res){
       return result
     }).then(function() {
       console.log(result)
-      res.render('uploadHomework', { title: homework[0].courseName+' '
+      if(req.query.hasMsg == "true") {
+        req.flash('msg','You did not upload file.');
+        res.locals.messages = req.flash();
+      }
+      res.render('uploadHomework', { title: req.query.studentID+' '+homework[0].courseName+' '
           +homework[0].homeworkName+' Upload Homework Area' , result :result });
     })
   })
@@ -87,7 +91,7 @@ router.post('/upload', function(req, res){
           if (err)
             return res.status(500).send(err);
           GradeDB.update({"homework_uuid":req.query.homework_uuid, "studentID" :req.query.studentID},
-          {$set:{submitTime : upload(req.query.homework_uuid)}, homeworkState : '已繳交'}).then(function(result) {
+          {$set:{submitTime : upload(req.query.homework_uuid)}, homeworkState : 'Upload'}).then(function(result) {
             // console.log(result)
             res.redirect('/listHomework?courseName='+homework[0].courseName+'&studentID='+req.query.studentID)
             
@@ -120,16 +124,12 @@ router.get('/download', function(req, res){
         res.download(filePath)
       } 
       else {
-        req.flash('msg','沒有上傳檔案');
-        res.locals.messages = req.flash();
-        console.log(result)
         GradeDB.find({"homework_uuid": homework[0]._id, "studentID": req.query.studentID}).then(function(grade) {
           result.grade = grade
           return result
         }).then(function() {
           console.log(result)
-          res.render('uploadHomework',  { title: homework[0].courseName+' '
-            +homework[0].homeworkName+' 上傳作業區' , result :result })
+          res.redirect('/listHomework/uploadHomework?homework_uuid='+req.query.homework_uuid+'&studentID='+req.query.studentID+'&hasMsg=true')
         })
       }
     })

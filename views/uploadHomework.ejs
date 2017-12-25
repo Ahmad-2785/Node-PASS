@@ -7,7 +7,7 @@
 </style>
 <div class="container services">
 <div class="jumbotron" >
-<h1><%= title %></h1>        
+<h2><strong><%= title %></strong></h2>        
 </div>
     <% if (locals.messages) { %>
     <div class="alert alert-danger" id="danger-alert">
@@ -24,50 +24,53 @@
 
     <table class="bordered" >
         <tr>
-            <th >作業名稱</th>
+            <th >Homework Name</th>
             <td><%= result.homework[0].homeworkName %></td>                              
         </tr>
         <tr>
-            <th>繳交期限</th>
+            <th>Due Date</th>
             <td><%= result.homework[0].dueDate %></td>
         </tr>
         <tr>
-            <th>附屬檔名</th>
+            <th>Attached File Name</th>
             <td><%= result.homework[0].fileExtension %></td>
         </tr>    
         <tr>
-            <th>比重</th>
+            <th>Percentage</th>
             <td><%= result.homework[0].percentage %></td>
         </tr> 
         <tr>
-            <th>逾時補交</th>
-            <td><%= result.homework[0].dueDateExtension ? "可以補交" : "不可補交" %></td>
+            <th>Can Be Delayed</th>
+            <td><%= result.homework[0].dueDateExtension ? "Yes" : "No" %></td>
         </tr>
         <tr>
-            <th>作業描述</th>
+            <th>Homework Description</th>
             <td><%= result.homework[0].homeworkDescription %></td>
         </tr>   
         <tr>
-            <th>作業評語</th>
-            <td><textarea rows="3" cols="40" name="feedback" id="<%= result.studentID %>_<%= result.homeworks[0].homeworkName %>_feedback"  readonly><%= result.grade[0].homeworkFeedback %></textarea></td>
+            <th>Homework Feedback</th>
+            <td><textarea rows="3" cols="40" name="feedback" id="<%= result.studentID %>_<%= result.homework[0].homeworkName %>_feedback"  readonly><%= result.grade[0].homeworkFeedback %></textarea></td>
         </tr>                     
     </table><br>
     <form action="/listHomework/upload?homework_uuid=<%= result.homework[0]._id %>&studentID=<%= result.studentID %>" method="POST" align="center" enctype="multipart/form-data">
 
         <label align="center" >
-            <input type="file"  id="uploadFile" name="uploadFile"  accept=".<%= result.homework[0].fileExtension %>"  / required>
+            <input type="file"  id="uploadFile" name="uploadFile" style="display:none;" accept=".<%= result.homework[0].fileExtension %>" onchange="this.form.upfile.value=this.value.substr(this.value.lastIndexOf('\\')+1);"  / required>
+            <input type="button" class="btn btn-danger" value="Choose File" onclick="this.form.uploadFile.click();">
+            <input type="text" name="upfile" size="20" readonly>
             <label for="uploadFile" ></label>
         
             <span style="width:100px">&nbsp;&nbsp;</span>
+
             
-        </label><br>
-        <a align="center" class="btn btn-info" id="download_<%= result.studentID %>" href="/listHomework/download?homework_uuid=<%= result.homework[0]._id %>&studentID=<%= result.studentID %>">下載</a>
+        </label>
+        <a align="center" class="btn btn-info" id="download_<%= result.studentID %>" href="/listHomework/download?homework_uuid=<%= result.homework[0]._id %>&studentID=<%= result.studentID %>">Download</a>
         
-        
+        <br><br>
         <% let disabled = result.homework.canUpload ? "" : "disabled" %>
-        <input type="submit" id="oktoUpload"class="btn btn-info" <%= disabled %>  value="確定上傳">
+        <input type="submit" id="oktoUpload"class="btn btn-info" <%= disabled %>  value="Upload">
         <span style="width:100px">&nbsp;&nbsp;</span>
-        <input type="reset" class="btn btn-default" value="取消">
+        <input type="reset" class="btn btn-default" value="Cancel">
     </form> 
 </div>
 
