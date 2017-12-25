@@ -5,19 +5,18 @@
 <div class="container services">
 <div class="well jumbotron">
 <h1><%= title %></h1>
-<p>This is a simple hero</p>
 </div>
         <form action="/hw/editHW?homework_uuid=<%= result[0]._id %>" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                  <label for="selectCourse">課程名稱</label>
+                  <label for="selectCourse">Course Name</label>
                   <input  class="form-control" name="courseName" id="InputselectCourse" readonly value="<%= result[0].courseName %>">
                 </div>
                 <div class="form-group">
-                  <label for="homeworkName">作業名稱</label>
+                  <label for="homeworkName">Homework Name</label>
                   <input class="form-control" name="homeworkName" id="InputhomeworkName" oninvalid="setCustomValidity('請填寫這個欄位');" oninput="setCustomValidity('');" value="<%= result[0].homeworkName %>" required>
                 </div>
                 <div class="form-group">
-                <label for="dueDate">繳交期限</label>
+                <label for="dueDate">Due Date</label>
                   <div class="input-group date" id="datetimepicker1">
                       <input type="text" class="form-control" name="dueDate" id="InputDueDate" oninvalid="setCustomValidity('日期格式錯誤');" oninput="setCustomValidity('');" value="<%= result[0].dueDate %>" required>
                       <span id="calendarInEditHW" class="input-group-addon">
@@ -26,28 +25,30 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="hwPercentage">比重</label>
+                  <label for="hwPercentage">Percentage</label>
                   <input  class="form-control" name="percentage" id="InputhwPercentage" placeholder="作業比重%" oninvalid="setCustomValidity('請填寫這個欄位');" oninput="setCustomValidity('');" value="<%= result[0].percentage %>" required>
                 </div>
                 <div class="form-group">
-                    <label for="hwFileExtension">附屬檔名</label>
+                    <label for="hwFileExtension">Attached File Name</label>
                     <input  class="form-control" name="fileExtension" id="InputhwFileExtension" placeholder="附屬檔名" oninvalid="setCustomValidity('請填寫這個欄位');" oninput="setCustomValidity('');"  value="<%= result[0].fileExtension %>" required> 
                   </div>
                 <div class="form-group">
-                  <label for="hwDescription">作業描述</label></br>
+                  <label for="hwDescription">Homework Description</label></br>
                   <textarea rows="3" cols="50" name="homeworkDescription" oninvalid="setCustomValidity('請填寫這個欄位');" oninput="setCustomValidity('');" required><%= result[0].homeworkDescription %></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="hwTestScript">上傳腳本</label></br>
-                    <input type="file" name="homeworkTestScript"  id="homeworkTestScript" accept="*">
+                  <label for="hwTestScript">Upload Homework Test Script</label></br>
+                    <input type="file" name="homeworkTestScript" style="display:none;" id="homeworkTestScript" accept="*" onchange="this.form.upfile.value=this.value.substr(this.value.lastIndexOf('\\')+1);">
+                    <input type="button" class="btn btn-danger" value="Choose File" onclick="this.form.homeworkTestScript.click();">
+                    <input type="text" name="upfile" size="20" readonly>
                 </div>
                 <div class="checkbox" >
                   <label>
                     <% let checked = result[0].dueDateExtension ? "checked" : "" %>
-                    <input type="checkbox" name="dueDateExtension" id="dueDateExtension" <%= checked %>  > 逾期補交
+                    <input type="checkbox" name="dueDateExtension" id="dueDateExtension" <%= checked %>  > Can be delayed
                   </label>
                 </div>
-                <button type="submit" id="submitInEditHW" class="btn btn-default">Submit</button>
+                <button type="submit" id="submitInEditHW" class="btn btn-info" class="btn btn-default">Submit</button>
         </form>
         <style>
           input:focus:invalid { 

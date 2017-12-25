@@ -4,7 +4,7 @@
   <head>
   
     <div id = "<%= title %> report" style="text-align:center;">
-  　  <div style="margin:0 auto;font-size: 30px;"><strong><h1><%= title %>作業成績分佈表</h1></strong></div>
+  　  <div style="margin:0 auto;font-size: 30px;"><strong><h1><%= title %> Homework grade status</h1></strong></div>
     </div>
 
     <meta charset="UTF-8">
@@ -14,11 +14,11 @@
     <div style="width: 60%; float:left">
     <div style="margin-right:100px; margin-top:100px">
 
-    <table class="t1">
+    <table class="t1" >
      <thead>
         <tr>
-          <th>StudentID</th>
-          <th>StudentName</th>
+          <th>Student ID</th>
+          <th>Student Name</th>
           <th>Grade</th>
         </tr>
       </thead>
@@ -33,8 +33,8 @@
             <td><%= result[i].studentName %></td>
             <td><%= result[i].homeworkGrade %></td>
         </tr>
-     <%  }  %>
-    <tr><th>總平均</th><td></td><td><font color="#FF0000"><%= result.average  %></front></td></tr>
+          <%  }  %>
+    <tr><th>Average</th><td></td><td><font color="#FF0000"><%= result.average  %></front></td></tr>
     </tbody>
     </table>
      </div>
@@ -51,7 +51,7 @@
           ['89-80',     <%= pieChartInfos.get('8') %>],
           ['79-70',  <%= pieChartInfos.get('7') %>],
           ['69-60',<%= pieChartInfos.get('6') %>],
-          ['不及格',   <%= pieChartInfos.get('UnderSixty') %>]
+          ['Fail',   <%= pieChartInfos.get('UnderSixty') %>]
         ]);
 
         var options = {

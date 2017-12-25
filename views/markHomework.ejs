@@ -6,11 +6,11 @@
     <table class="bordered">
         <thead>
             <tr>
-                <th>學號</th>
-                <th>姓名</th>
-                <th>成績</th>
-                <th>繳交時間</th>
-                <th>批改作業</th>                                          
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Grade</th>
+                <th>Submit Time</th>
+                <th>Mark Homework</th>                                          
             </tr>
         </thead>   
         <tbody>
@@ -20,7 +20,7 @@
                 <td><%= result[i].studentName %></td>
                 <td id="grade_<%= result[i].studentID %>" ><%= result[i].homeworkGrade %></td>
                 <td><%= result[i].submitTime %></td>
-                <td><a class="btn btn-info" id="toMark_<%= result[i].studentID %>" href="/markHomework/person/info/<%= result[i].studentID %>/<%= result[i].homework_uuid %>" title="<%= result[i].studentID %>">批改</a></td><!-- href到個人 -->
+                <td><a class="btn btn-info" id="toMark_<%= result[i].studentID %>" href="/markHomework/person/info/<%= result[i].studentID %>/<%= result[i].homework_uuid %>" title="Mark Homework">Mark</a></td><!-- href到個人 -->
             </tr>
             <% } %>
         </tbody>

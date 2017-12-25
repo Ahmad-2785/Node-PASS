@@ -38,7 +38,7 @@ router.get('/', function(req, res){
 
 router.get('/generate', function(req, res){
     if(req.query.noSelect) {
-        req.flash('msg','請選擇作業');
+        req.flash('msg','Please choose homework.');
         res.locals.messages = req.flash();
         let homeworkCollections = []
         HW.find({}).then(function(findHwResults){

@@ -5,7 +5,6 @@
 <div class="container services">
   <div class="well jumbotron">
     <h1><%= title %></h1>
-    <p>select grade report for course</p>
   </div>
   <% if (locals.messages) { %>
     <div class="alert alert-danger" id="danger-alert">
@@ -21,8 +20,8 @@
   <table class="bordered" id="myTable">
         <thead>
           <tr>
-            <th>courseName</th>
-            <th>homework name</th>
+            <th>Course Name</th>
+            <th>Homework Name</th>
           </tr>
         </thead>
 
@@ -37,17 +36,17 @@
             
           <td>
             <select class="custom-select" id="selectedHomework<%= i %>" onChange="myFunction(selectedHomework<%= i %>)">
-                <option value="0" selected="true" disabled="disabled">選擇作業</option>
+                <option value="0" selected="true" disabled="disabled">Choose Homework</option>
                   <% for(let q=0; q < result[i].hwinfo.length; q++) { %>
-                <option value="courseName=<%= result[i].hwinfo[q].homeworkName %>&&homework_id=<%= result[i].hwinfo[q].homework_id %>" id="<%= result[i].hwinfo[q].homeworkName %>"><%= result[i].hwinfo[q].homeworkName %></option>
-                      <% } %>
+                  <option value="courseName=<%= result[i].hwinfo[q].homeworkName %>&&homework_id=<%= result[i].hwinfo[q].homework_id %>" id="<%= result[i].hwinfo[q].homeworkName %>"><%= result[i].hwinfo[q].homeworkName %></option>
+                  <% } %>
             </select> 
           </td>
         </tr>
       <% } %>
         </tbody>
       </table> <br>
-      <a class="btn btn-danger" href="/gradesReport/generate?noSelect=true" id="SubmitBtn" required>產生報表</a></td>
+      <a class="btn btn-danger" href="/gradesReport/generate?noSelect=true" id="SubmitBtn" required>Genetrate Report</a></td>
 </div>
 
 <script>
