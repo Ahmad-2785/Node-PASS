@@ -31,7 +31,7 @@ router.get('/', function(req, res){
     }).then(function(){
       console.log(result)
       res.render('listHomework', { title:req.query.studentID+' '
-        +req.query.courseName+'作業區' , result :result });
+        +req.query.courseName+' '+'Homework Area' , result :result });
     })
   })
 })
@@ -58,7 +58,7 @@ router.get('/uploadHomework', function(req, res){
     }).then(function() {
       console.log(result)
       res.render('uploadHomework', { title: homework[0].courseName+' '
-          +homework[0].homeworkName+' 上傳作業區' , result :result });
+          +homework[0].homeworkName+' Upload Homework Area' , result :result });
     })
   })
 })
@@ -107,7 +107,8 @@ router.post('/upload', function(req, res){
 router.get('/download', function(req, res){
   let result = {
     studentID :  req.query.studentID,
-    homework :[]
+    homework :[],
+    grades : []
   }
   HW.find({"_id" : req.query.homework_uuid}).then(function(homework){
     result.homework = homework
@@ -122,8 +123,14 @@ router.get('/download', function(req, res){
         req.flash('msg','沒有上傳檔案');
         res.locals.messages = req.flash();
         console.log(result)
-        res.render('uploadHomework',  { title: homework[0].courseName+' '
-          +homework[0].homeworkName+' 上傳作業區' , result :result })
+        GradeDB.find({"homework_uuid": homework[0]._id, "studentID": req.query.studentID}).then(function(grade) {
+          result.grade = grade
+          return result
+        }).then(function() {
+          console.log(result)
+          res.render('uploadHomework',  { title: homework[0].courseName+' '
+            +homework[0].homeworkName+' 上傳作業區' , result :result })
+        })
       }
     })
     
