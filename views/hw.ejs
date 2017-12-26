@@ -13,7 +13,7 @@
           <th>Homework Name</th>
           <th>Due Date</th>
           <th>Percentage</th>
-          <th>Attached File Name</th>
+          <th>Attached Filename</th>
           <th>Homework Description</th>
           <th>Test Script</th>
           <th>Can Be Delayed</th>
@@ -75,12 +75,12 @@
           </div>
           <div class="form-group">
             <label for="homeworkName">Homework Name</label>
-            <input class="form-control" name="homeworkName" id="InputhomeworkName" oninvalid="setCustomValidity('Need to input.');" oninput="setCustomValidity('');" placeholder="Homework Number" required>
+            <input class="form-control" name="homeworkName" id="InputhomeworkName" oninvalid="setCustomValidity('This field is required.');" oninput="setCustomValidity('');" placeholder="Homework Name" required>
           </div>
           <div class="form-group">
           <label for="dueDate">Due Date</label>
             <div class="input-group date" id="datetimepicker1">
-                <input type="text" class="form-control" name="dueDate" id="InputDueDateInAddHW" oninvalid="setCustomValidity('Date format is wrong.');" oninput="setCustomValidity('');" / required>
+                <input type="text" class="form-control" name="dueDate" id="InputDueDateInAddHW" oninvalid="setCustomValidity('This date format is wrong.');" oninput="setCustomValidity('');" / required>
                 <span id="calendarInAddHW" class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -88,15 +88,15 @@
           </div>
           <div class="form-group">
             <label for="hwPercentage">Percentage</label>
-            <input  class="form-control" name="percentage" id="InputhwPercentage" oninvalid="setCustomValidity('Need to input.');" oninput="setCustomValidity('');" placeholder="Percentage"  required>
+            <input  class="form-control" name="percentage" id="InputhwPercentage" oninvalid="setCustomValidity('This field is required.');" oninput="setCustomValidity('');" placeholder="Percentage"  required>
           </div>
           <div class="form-group">
-              <label for="hwFileExtension">Attached File Name</label>
-              <input  class="form-control" name="fileExtension" id="InputhwFileExtension" oninvalid="setCustomValidity('Need to input.');" oninput="setCustomValidity('');" placeholder="Attached File Name" required>
+              <label for="hwFileExtension">Attached Filename</label>
+              <input  class="form-control" name="fileExtension" id="InputhwFileExtension" oninvalid="setCustomValidity('This field is required.');" oninput="setCustomValidity('');" placeholder="Attached Filename" required>
           </div>
           <div class="form-group">
             <label for="hwDescription">Homework Description</label></br>
-            <textarea rows="3" cols="50" name="homeworkDescription" id="InputhwHomeworkDescription" oninvalid="setCustomValidity('Need to input.');" oninput="setCustomValidity('');" required></textarea>
+            <textarea rows="3" cols="50" name="homeworkDescription" id="InputhwHomeworkDescription" oninvalid="setCustomValidity('This field is required.');" oninput="setCustomValidity('');" required></textarea>
           </div>
           <div class="form-group">
             <label for="hwTestScript">Upload Homework Test Script</label></br>
