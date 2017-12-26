@@ -181,7 +181,7 @@ ${fileDownloadPath}    ~/downloads
     ${uploadtime}    get text    id=submitTime_${homeworkName}
     Should be equal    ${uploadtime}    ${EMPTY}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    105598002 Software Engineering ${homeworkName} Upload Homework Area
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Choose file    id=uploadFile    ${fileUploadPath}/105598002_${homeworkName}.txt
     Click Element    id=oktoUpload
     element text should be    class =jumbotron    105598002 Software Engineering Homework Area
@@ -209,7 +209,7 @@ ${fileDownloadPath}    ~/downloads
     ${uploadtime}    get text    id=submitTime_${homeworkName}
     Should be equal    ${uploadtime}    ${EMPTY}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    105598002 Software Engineering ${homeworkName} Upload Homework Area
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Click Element    id=oktoUpload
     ${loadFile} =    Execute JavaScript    return window.document.getElementById("uploadFile").getAttribute('oninvalid').includes("請選擇檔案");
     Should be true    ${loadFile}
@@ -228,7 +228,7 @@ ${fileDownloadPath}    ~/downloads
     ${uploadtime}    get text    id=submitTime_${homeworkName}
     Should be equal    ${uploadtime}    ${EMPTY}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    105598002 Software Engineering ${homeworkName} Upload Homework Area
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Choose file    id=uploadFile    ${fileUploadPath}/105598002_${homeworkName}.txt
     Click Element    id=oktoUpload
     element text should be    class =jumbotron    105598002 Software Engineering Homework Area
@@ -236,7 +236,7 @@ ${fileDownloadPath}    ~/downloads
     Should Not Be Empty    id=submitTime_${homeworkName}
     ${handintime_first}    get text    id=submitTime_${homeworkName}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    105598002 Software Engineering ${homeworkName} Upload Homework Area
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Choose file    id=uploadFile    ${fileUploadPath}/105598002_${homeworkName}.txt
     Click Element    id=oktoUpload
     element text should be    class =jumbotron    105598002 Software Engineering Homework Area
@@ -255,7 +255,7 @@ ${fileDownloadPath}    ~/downloads
     ${uploadtime}    get text    id=submitTime_${homeworkName}
     Should be equal    ${uploadtime}    ${EMPTY}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    105598002 Software Engineering ${homeworkName} Upload Homework Area
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     ${alert}    get text    id = danger-alert
     Should be equal    ${alert}    x\nOverdue Submission.
     [Teardown]    run keywords    Close Browser    老師刪除作業並關閉
@@ -410,7 +410,7 @@ go to login page
     close browser
 
 刪除上傳的作業
-    Remove File    C:/Users/User/Desktop/node-pass/homeworkCollection/105598002_${homeworkName}.txt
+    Remove File    ${fileUploadPath}/../homeworkCollection/105598002_${homeworkName}.txt
     Remove File    ${fileUploadPath}/105598002_${homeworkName}.txt
 
 刪除下載的作業
