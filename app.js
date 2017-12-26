@@ -53,7 +53,7 @@ let authForTeacher = function(req, res, next) {
   if (req.session && req.session.isLogin == true && req.session.result[0].role=="teacher")
     return next();
   else{
-    req.flash('msg','權限不足，請重新登入');
+    req.flash('msg','Unauthorized.');
     res.locals.messages = req.flash();
     res.render('login')
   }
@@ -64,7 +64,7 @@ let authForStudent = function(req, res, next) {
   if (req.session && req.session.isLogin == true && req.session.result[0].role=="student")
     return next();
   else{
-    req.flash('msg','權限不足，請重新登入');
+    req.flash('msg','Unauthorized.');
     res.locals.messages = req.flash();
     res.render('login')
   }

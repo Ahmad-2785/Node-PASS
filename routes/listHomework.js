@@ -47,7 +47,7 @@ router.get('/uploadHomework', function(req, res){
     result.homework = homework
     result.homework["canUpload"] = canUpload
     if(!canUpload){
-      req.flash('msg','End to upload');
+      req.flash('msg','Overdue Submission.');
       res.locals.messages = req.flash();
     }
     return homework
@@ -61,8 +61,9 @@ router.get('/uploadHomework', function(req, res){
         req.flash('msg','You did not upload file.');
         res.locals.messages = req.flash();
       }
-      res.render('uploadHomework', { title: req.query.studentID+' '+homework[0].courseName+' '
-          +homework[0].homeworkName+' Upload Homework Area' , result :result });
+      res.render('uploadHomework',{title : req.query.studentID+' '+homework[0].courseName ,
+                                   subTitle : homework[0].homeworkName+' Upload Homework Area',
+                                   result :result})
     })
   })
 })

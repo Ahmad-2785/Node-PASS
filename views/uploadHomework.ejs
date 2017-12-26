@@ -7,7 +7,8 @@
 </style>
 <div class="container services">
 <div class="jumbotron" >
-<h2><strong><%= title %></strong></h2>        
+<h2><strong><%= title %></strong></h2>
+<h3><strong><%= subTitle %></strong></h3>
 </div>
     <% if (locals.messages) { %>
     <div class="alert alert-danger" id="danger-alert">
@@ -32,7 +33,7 @@
             <td><%= result.homework[0].dueDate %></td>
         </tr>
         <tr>
-            <th>Attached File Name</th>
+            <th>Attached Filename</th>
             <td><%= result.homework[0].fileExtension %></td>
         </tr>    
         <tr>
