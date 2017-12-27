@@ -211,7 +211,7 @@ ${fileDownloadPath}    ~/downloads
     Click Element    id=uploadhomework_${homeworkName}
     element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Click Element    id=oktoUpload
-    ${loadFile} =    Execute JavaScript    return window.document.getElementById("uploadFile").getAttribute('oninvalid').includes("請選擇檔案");
+    ${loadFile} =    Execute JavaScript    return window.document.getElementById("upfile").getAttribute('oninvalid').includes("Please choose file.");
     Should be true    ${loadFile}
     [Teardown]    run keywords    Close browser
     ...    AND    Remove File    ${fileUploadPath}/105598002_${homeworkName}.txt
