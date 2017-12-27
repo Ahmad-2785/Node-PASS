@@ -15,7 +15,7 @@ router.get('/ping/byjenkins', function(req, res){
     studentID:jobName.split('_')[0],
     homeworkName:jobName.split('_')[1]
   }
-  let baseurl="http://leo:1209@localhost:8080/job/"
+  let baseurl="http://leo:1209@140.124.181.129:8080/job/"
   let filePath="/ws/mochawesome-report/mochawesome.json"
   request({
       url: baseurl.concat(jobName).concat(filePath),

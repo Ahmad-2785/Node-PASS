@@ -23,7 +23,7 @@
                 <td id="homeworkState_<%= result.homeworks[i].homeworkName %>"><%= result.grades[i].homeworkState %></td>
                 <td id="dueDate_<%= result.homeworks[i].homeworkName %>"><%= result.homeworks[i].dueDate %></td>
                 <td id="submitTime_<%= result.homeworks[i].homeworkName %>"><%= result.grades[i].submitTime %></td>
-                <td id="homeworkGrade_<%= result.homeworks[i].homeworkName %>"><%= result.grades[i].homeworkGrade %></td>
+                <td><a href="<%= result.grades[i].homeworkReport %>" id="homeworkGrade_<%= result.homeworks[i].homeworkName %>"><%= result.grades[i].homeworkGrade %></a></td>
                 <td ><%= result.homeworks[i].dueDateExtension ? "Yes" : "No" %></td>
                 <td><a class="btn btn-info" id="uploadhomework_<%= result.homeworks[i].homeworkName %>" href="/listHomework/uploadHomework?homework_uuid=<%= result.homeworks[i]._id %>&studentID=<%= result.studentID %>" >Upload</a></td>                                       
             </tr>
