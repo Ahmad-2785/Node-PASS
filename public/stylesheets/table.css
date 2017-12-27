@@ -16,7 +16,7 @@
   }
   .t1 thead th {
     background: #4f81bd;
-    text-transform: lowercase;
+    text-transform: none;
     text-align: center;
     font-size: 15px;
     color: #fff;

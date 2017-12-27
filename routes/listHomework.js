@@ -28,10 +28,10 @@ router.get('/', function(req, res){
     GradeDB.find({"homework_uuid" :homework_uuid, "studentID" :req.query.studentID}).then(function(grade){
       result.grades = grade
       return result
-    }).then(function(a){
+    }).then(function(){
       console.log(result)
       res.render('listHomework', { title:req.query.studentID+' '
-        +req.query.courseName+'作業區' , result :result });
+        +req.query.courseName+' '+'Homework Area' , result :result });
     })
   })
 })
@@ -39,19 +39,32 @@ router.get('/', function(req, res){
 router.get('/uploadHomework', function(req, res){
   let result = {
       studentID :  req.query.studentID,
-      homework :[]
+      homework :[],
+      grade :[]
   }
   HW.find({"_id":req.query.homework_uuid}).then(function(homework){
     let canUpload = (homework[0].dueDateExtension == true) || !(overDeadline(homework[0].dueDate))
     result.homework = homework
     result.homework["canUpload"] = canUpload
-    console.log(result)
     if(!canUpload){
-      req.flash('msg','上傳截止');
+      req.flash('msg','Overdue Submission.');
       res.locals.messages = req.flash();
     }
-      res.render('uploadHomework', { title: homework[0].courseName+' '
-          +homework[0].homeworkName+' 上傳作業區' , result :result });
+    return homework
+  }).then(function(homework) {
+    GradeDB.find({"homework_uuid": homework[0]._id, "studentID": req.query.studentID}).then(function(grade) {
+      result.grade = grade
+      return result
+    }).then(function() {
+      console.log(result)
+      if(req.query.hasMsg == "true") {
+        req.flash('msg','You did not upload file.');
+        res.locals.messages = req.flash();
+      }
+      res.render('uploadHomework',{title : req.query.studentID+' '+homework[0].courseName ,
+                                   subTitle : homework[0].homeworkName+' Upload Homework Area',
+                                   result :result})
+    })
   })
 })
 
@@ -79,7 +92,7 @@ router.post('/upload', function(req, res){
           if (err)
             return res.status(500).send(err);
           GradeDB.update({"homework_uuid":req.query.homework_uuid, "studentID" :req.query.studentID},
-          {$set:{submitTime : upload(req.query.homework_uuid)}, homeworkState : '已繳交'}).then(function(result) {
+          {$set:{submitTime : upload(req.query.homework_uuid)}, homeworkState : 'Upload'}).then(function(result) {
             // console.log(result)
             res.redirect('/listHomework?courseName='+homework[0].courseName+'&studentID='+req.query.studentID)
             
@@ -99,7 +112,8 @@ router.post('/upload', function(req, res){
 router.get('/download', function(req, res){
   let result = {
     studentID :  req.query.studentID,
-    homework :[]
+    homework :[],
+    grades : []
   }
   HW.find({"_id" : req.query.homework_uuid}).then(function(homework){
     result.homework = homework
@@ -111,11 +125,13 @@ router.get('/download', function(req, res){
         res.download(filePath)
       } 
       else {
-        req.flash('msg','沒有上傳檔案');
-        res.locals.messages = req.flash();
-        console.log(result)
-        res.render('uploadHomework',  { title: homework[0].courseName+' '
-          +homework[0].homeworkName+' 上傳作業區' , result :result })
+        GradeDB.find({"homework_uuid": homework[0]._id, "studentID": req.query.studentID}).then(function(grade) {
+          result.grade = grade
+          return result
+        }).then(function() {
+          console.log(result)
+          res.redirect('/listHomework/uploadHomework?homework_uuid='+req.query.homework_uuid+'&studentID='+req.query.studentID+'&hasMsg=true')
+        })
       }
     })
     

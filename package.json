@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart": "start mongod",
+    "prestart": "pm2 delete PASS && start mongod",
     "start": "node ./bin/PASS",
     "api-test": "nyc --reporter=cobertura mocha test/api/*.js",
     "initdb": "start mongod  && mongo hwgo --eval db.dropDatabase() && mongoimport -d hwgo -c coursescollections dataSeed/courseSeed.json && mongoimport  -d hwgo -c studentcollections dataSeed/studentSeed.json",

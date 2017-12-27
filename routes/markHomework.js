@@ -10,7 +10,7 @@ const HW = require('../models/homework')
 router.get('/:homework_uuid', function(req, res) {
   GradesDB.find({"homework_uuid": req.params.homework_uuid}).then(function(result){
     console.log(result)
-    res.render('markHomework', { title:'批改作業專區',  result :result})
+    res.render('markHomework', { title:'Mark Homework Area',  result :result})
   })
 })
 
@@ -20,7 +20,7 @@ router.get('/person/info/:studentID/:homework_uuid', function(req, res){
     GradesDB.find({"studentID":req.params.studentID, "homework_uuid":req.params.homework_uuid})
       .then(function(result){
         console.log(result)
-        res.render('markPersonHomework',{title : '作業狀態', result : result})   
+        res.render('markPersonHomework',{title : ' Homework Status', result : result})   
   })
 })
 
@@ -30,7 +30,7 @@ router.post('/person/updateGrade', function(req, res){
   console.log(req.body.grade)
   console.log(req.query.studentID)
   GradesDB.update({studentID : req.query.studentID, homework_uuid : req.query.homework_uuid},
-    {$set:{homeworkGrade : req.body.grade}}).then(function(result){
+    {$set:{homeworkGrade : req.body.grade, homeworkFeedback : req.body.feedback}}).then(function(result){
       res.redirect('/markHomework/'+req.query.homework_uuid)
     })
 })
@@ -52,13 +52,13 @@ router.get('/person/download', function(req, res){
         return
       } 
       else {
-        req.flash('msg','沒有上傳檔案');
+        req.flash('msg','Did not upload file.');
         res.locals.messages = req.flash();
         GradesDB.find({"studentID":req.query.studentID, "homework_uuid":req.query.homework_uuid})
         .then(function(result){
           console.log(result)
           
-          res.render('markPersonHomework',{title : '作業狀態', result : result})   
+          res.render('markPersonHomework',{title : ' Homework Status', result : result})   
         })
       }
     });

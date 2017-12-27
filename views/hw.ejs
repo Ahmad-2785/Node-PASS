@@ -5,19 +5,18 @@
 <div class="container services">
 <div class="well jumbotron">
 <h1><%= title %></h1>
-<p>This is a simple hero</p>
 </div>
-<table class="table table-inverse">
+<table class="bordered">
       <thead>
         <tr>
-          <th>courseName</th>
-          <th>homeworkName</th>
-          <th>dueDate</th>
-          <th>percentage</th>
-          <th>fileExtension</th>
-          <th>homeworkDescription</th>
-          <th>testScript</th>
-          <th>補交</th>
+          <th>Course Name</th>
+          <th>Homework Name</th>
+          <th>Due Date</th>
+          <th>Percentage</th>
+          <th>Attached Filename</th>
+          <th>Homework Description</th>
+          <th>Test Script</th>
+          <th>Can Be Delayed</th>
           <th></th>
           <th></th>
         </tr>
@@ -43,72 +42,74 @@
               <%= result[i].homeworkTestScriptName %>
           </a>
           </td>
-          <td id="HW<%= result[i].homeworkName %>_dueDateExtension"><%= result[i].dueDateExtension ? "可以補交" : "不可補交" %></td>
+          <td id="HW<%= result[i].homeworkName %>_dueDateExtension"><%= result[i].dueDateExtension ? "Yes" : "No" %></td>
           <td class="center">
-            <a class="btn icon" href="/hw/edit/<%= result[i]._id%>" id="edit_<%= result[i].homeworkName%>" title="編輯" style="text-decoration:none">
+            <a class="btn icon" href="/hw/edit/<%= result[i]._id%>" id="edit_<%= result[i].homeworkName%>" title="Edit" style="text-decoration:none">
               <i class="fa fa-pencil fa-lg" aria-hidden="true" ></i>
             </a>
           </td>
           <td class="center">
-            <a class="btn icon" href="/hw/delete/<%= result[i]._id%>" id="delete_<%= result[i].homeworkName%>" title="刪除" style="text-decoration:none">
+            <a class="btn icon" href="/hw/delete/<%= result[i]._id%>" id="delete_<%= result[i].homeworkName%>" title="Delete" style="text-decoration:none">
               <i  class="fa fa-trash fa-lg" aria-hidden="true" ></i>
             </a>
           </td>
         </tr>
         <% } %>
       </tbody>
-</table>
-<div class="center"><button data-toggle="modal" data-target="#squarespaceModal" id="createHW" class="btn btn-primary btn-lg center-block">新增作業</button></div>
+</table><br>
+<div class="center"><button data-toggle="modal" data-target="#squarespaceModal" id="createHW" class="btn btn-primary btn-lg center-block">Create new homework</button></div>
     <!-- line modal -->
 <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-        <h3 class="modal-title" id="lineModalLabel">新增作業</h3>
+        <h3 class="modal-title" id="lineModalLabel">Create Homework</h3>
       </div>
       <div class="modal-body">
         <!-- content goes here -->
         <form action="/hw/addHW" method="POST" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="selectCourse">課程名稱</label>
+            <label for="selectCourse">Course Name</label>
             <input  class="form-control" name="courseName" id="InputselectCourse" value="<%= courseName %>" readonly>
           </div>
           <div class="form-group">
-            <label for="homeworkName">作業名稱</label>
-            <input class="form-control" name="homeworkName" id="InputhomeworkName" oninvalid="setCustomValidity('請填寫這個欄位');" oninput="setCustomValidity('');" placeholder="第幾次作業" required>
+            <label for="homeworkName">Homework Name</label>
+            <input class="form-control" name="homeworkName" id="InputhomeworkName" oninvalid="setCustomValidity('This field is required.');" oninput="setCustomValidity('');" placeholder="Homework Name" required>
           </div>
           <div class="form-group">
-          <label for="dueDate">繳交期限</label>
+          <label for="dueDate">Due Date</label>
             <div class="input-group date" id="datetimepicker1">
-                <input type="text" class="form-control" name="dueDate" id="InputDueDateInAddHW" oninvalid="setCustomValidity('日期格式錯誤');" oninput="setCustomValidity('');" / required>
+                <input type="text" class="form-control" name="dueDate" id="InputDueDateInAddHW" oninvalid="setCustomValidity('This date format is wrong.');" oninput="setCustomValidity('');" / required>
                 <span id="calendarInAddHW" class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
           </div>
           <div class="form-group">
-            <label for="hwPercentage">比重</label>
-            <input  class="form-control" name="percentage" id="InputhwPercentage" oninvalid="setCustomValidity('請填寫這個欄位');" oninput="setCustomValidity('');" placeholder="作業比重%"  required>
+            <label for="hwPercentage">Percentage</label>
+            <input  class="form-control" name="percentage" id="InputhwPercentage" oninvalid="setCustomValidity('This field is required.');" oninput="setCustomValidity('');" placeholder="Percentage"  required>
           </div>
           <div class="form-group">
-              <label for="hwFileExtension">附屬檔名</label>
-              <input  class="form-control" name="fileExtension" id="InputhwFileExtension" oninvalid="setCustomValidity('請填寫這個欄位');" oninput="setCustomValidity('');" placeholder="附屬檔名" required>
+              <label for="hwFileExtension">Attached Filename</label>
+              <input  class="form-control" name="fileExtension" id="InputhwFileExtension" oninvalid="setCustomValidity('This field is required.');" oninput="setCustomValidity('');" placeholder="Attached Filename" required>
           </div>
           <div class="form-group">
-            <label for="hwDescription">作業描述</label></br>
-            <textarea rows="3" cols="50" name="homeworkDescription" id="InputhwHomeworkDescription" oninvalid="setCustomValidity('請填寫這個欄位');" oninput="setCustomValidity('');" required></textarea>
+            <label for="hwDescription">Homework Description</label></br>
+            <textarea rows="3" cols="50" name="homeworkDescription" id="InputhwHomeworkDescription" oninvalid="setCustomValidity('This field is required.');" oninput="setCustomValidity('');" required></textarea>
           </div>
           <div class="form-group">
-            <label for="hwTestScript">上傳腳本</label></br>
-            <input type="file" name="homeworkTestScript"  id="homeworkTestScript" accept="*">
+            <label for="hwTestScript">Upload Homework Test Script</label></br>
+            <input type="file" name="homeworkTestScript" style="display:none;" id="homeworkTestScript" accept="*" onchange="this.form.upfile.value=this.value.substr(this.value.lastIndexOf('\\')+1);">
+            <input type="button" class="btn btn-danger" value="Choose File" onclick="this.form.homeworkTestScript.click();">
+            <input type="text" name="upfile" size="20" readonly>
           </div>
           <div class="form-check">
             <label>
-              <input type="checkbox" name="dueDateExtension" id="dueDateExtension"> 逾期補交
+              <input type="checkbox" name="dueDateExtension" id="dueDateExtension"> Can be delayed
             </label>
           </div>
-          <button type="submit" id="addHw" class="btn btn-default">Submit</button>
+          <button type="submit" id="addHw" class="btn btn-info">Submit</button>
         </form>
         <style>
           input:focus:invalid { 

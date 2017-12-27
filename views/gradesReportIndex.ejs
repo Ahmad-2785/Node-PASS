@@ -5,13 +5,23 @@
 <div class="container services">
   <div class="well jumbotron">
     <h1><%= title %></h1>
-    <p>select grade report for course</p>
   </div>
-  <table class="table table-inverse" id="myTable">
+  <% if (locals.messages) { %>
+    <div class="alert alert-danger" id="danger-alert">
+        <button type=button class=close data-dismiss=alert>x</button>
+        <strong><%= messages.msg %></strong>
+    </div>
+  <% } %>
+  <script>
+      $('#danger-alert').fadeTo(2000, 500).slideUp(500, function(){
+          $('#danger-alert').alert('close');
+        }); 
+  </script>
+  <table class="bordered" id="myTable">
         <thead>
           <tr>
-            <th>courseName</th>
-            <th>homework name</th>
+            <th>Course Name</th>
+            <th>Homework Name</th>
           </tr>
         </thead>
 
@@ -26,17 +36,17 @@
             
           <td>
             <select class="custom-select" id="selectedHomework<%= i %>" onChange="myFunction(selectedHomework<%= i %>)">
-                <option value="0" selected="true" disabled="disabled">選擇作業</option>
-                  <% for(var q=0; q < result[i].hwinfo.length; q++) { %>
-                <option value="courseName=<%= result[i].hwinfo[q].homeworkName %>&&homework_id=<%= result[i].hwinfo[q].homework_id %>"><%= result[i].hwinfo[q].homeworkName %></option>
-                      <% } %>
+                <option value="0" selected="true" disabled="disabled">Choose Homework</option>
+                  <% for(let q=0; q < result[i].hwinfo.length; q++) { %>
+                  <option value="courseName=<%= result[i].hwinfo[q].homeworkName %>&&homework_id=<%= result[i].hwinfo[q].homework_id %>" id="<%= result[i].hwinfo[q].homeworkName %>"><%= result[i].hwinfo[q].homeworkName %></option>
+                  <% } %>
             </select> 
           </td>
         </tr>
       <% } %>
         </tbody>
-        <td><a class="btn btn-danger" href="" id="SubmitBtn">產生報表</a></td>
-  </table>
+      </table> <br>
+      <a class="btn btn-danger" href="/gradesReport/generate?noSelect=true" id="SubmitBtn" required>Genetrate Report</a></td>
 </div>
 
 <script>

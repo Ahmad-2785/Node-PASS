@@ -23,7 +23,7 @@ ${fileDownloadPath}    ~/downloads
     element text should be    id=HW${homeworkName}_percentage    10
     element text should be    id=HW${homeworkName}_fileExtension    txt
     element text should be    id=HW${homeworkName}_homeworkDescription    test
-    element text should be    id=HW${homeworkName}_dueDateExtension    不可補交
+    element text should be    id=HW${homeworkName}_dueDateExtension    No
     [Teardown]    Run Keywords    click element    id=delete_${homeworkName}
     ...    AND    close browser
 
@@ -34,10 +34,10 @@ ${fileDownloadPath}    ~/downloads
     clear element text    id=InputDueDateInAddHW
     click button    id=addHw
     ${testHomeworkName}=    Execute JavaScript    return window.document.getElementById("InputhomeworkName").getAttribute("oninvalid").split("'")[1]
-    should be equal    ${testHomeworkName}    請填寫這個欄位
+    should be equal    ${testHomeworkName}    This field is required.
     input text    id=InputhomeworkName    ${homeworkName}
     ${testDueDate}=    Execute JavaScript    return window.document.getElementById("InputDueDateInAddHW").getAttribute("oninvalid").split("'")[1]
-    should be equal    ${testDueDate}    日期格式錯誤
+    should be equal    ${testDueDate}    This date format is wrong.
     [Teardown]    close browser
 
 成功編輯作業(CMS-TC04)
@@ -53,7 +53,7 @@ ${fileDownloadPath}    ~/downloads
     element text should be    id=HW${homeworkName}_percentage    100%
     element text should be    id=HW${homeworkName}_fileExtension    txt
     element text should be    id=HW${homeworkName}_homeworkDescription    Description is changed!!!
-    element text should be    id=HW${homeworkName}_dueDateExtension    不可補交
+    element text should be    id=HW${homeworkName}_dueDateExtension    No
     [Teardown]    Run Keywords    click element    id=delete_${homeworkName}
     ...    AND    close browser
 
@@ -69,10 +69,10 @@ ${fileDownloadPath}    ~/downloads
     clear element text    name=homeworkDescription
     click button    id=submitInEditHW
     ${testHomeworkName}=    Execute JavaScript    return window.document.getElementById("InputhomeworkName").getAttribute("oninvalid").split("'")[1]
-    should be equal    ${testHomeworkName}    請填寫這個欄位
+    should be equal    ${testHomeworkName}    This field is required.
     input text    name=homeworkName    ${homeworkName}
     ${testDueDate}=    Execute JavaScript    return window.document.getElementById("InputDueDate").getAttribute("oninvalid").split("'")[1]
-    should be equal    ${testDueDate}    日期格式錯誤
+    should be equal    ${testDueDate}    This date format is wrong.
     [Teardown]    Run Keywords    go back
     ...    AND    click element    id=delete_${homeworkName}
     ...    AND    close browser
@@ -119,7 +119,7 @@ ${fileDownloadPath}    ~/downloads
     Input Text    id = grade    -50
     Click Button    id = markHw_105598002
     ${grade}=    Execute JavaScript    return window.document.getElementById("grade").getAttribute("oninvalid").split("'")[1]
-    should be equal    ${grade}    數字格式錯誤
+    should be equal    ${grade}    Grade format is wrong.
     [Teardown]    run keywords    Close Browser    老師刪除作業並關閉
 
 學生下載作業(CMS-TC09)
@@ -152,7 +152,7 @@ ${fileDownloadPath}    ~/downloads
     Click Element    id = uploadhomework_${homeworkName}
     Click Element    id = download_105598002
     ${alert} =    get text    id = danger-alert
-    Should be equal    ${alert}    x\n沒有上傳檔案
+    Should be equal    ${alert}    x\nYou did not upload file.
     [Teardown]    run keywords    Close Browser    老師刪除作業並關閉
 
 老師/TA下載學生未曾上傳作業(CMS-TC12)
@@ -167,34 +167,34 @@ ${fileDownloadPath}    ~/downloads
     Click Element    id = toMark_105598002
     Click Element    id = download_105598002
     ${alert} =    get text    id = danger-alert
-    Should be equal    ${alert}    x\n沒有上傳檔案
+    Should be equal    ${alert}    x\nDid not upload file.
     [Teardown]    run keywords    Close Browser    老師刪除作業並關閉
 
 上傳作業(CMS-TC13)
     [Setup]    老師新增作業並關閉
     Create File    ${fileUploadPath}/105598002_${homeworkName}.txt    This is a file that robotframework create for test.
     studentLogin
-    element text should be    class =jumbotron    105598002學生作業繳交區
+    element text should be    class =jumbotron    105598002 Online Classroom
     Click Element    id=enterSoftware Engineering
-    element text should be    class =jumbotron    105598002 Software Engineering作業區
-    element should contain    id=homeworkState_${homeworkName}    未繳交
+    element text should be    class =jumbotron    105598002 Software Engineering Homework Area
+    element should contain    id=homeworkState_${homeworkName}    Not Upload
     ${uploadtime}    get text    id=submitTime_${homeworkName}
     Should be equal    ${uploadtime}    ${EMPTY}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    Software Engineering ${homeworkName} 上傳作業區
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Choose file    id=uploadFile    ${fileUploadPath}/105598002_${homeworkName}.txt
     Click Element    id=oktoUpload
-    element text should be    class =jumbotron    105598002 Software Engineering作業區
-    element text should be    id=homeworkState_${homeworkName}    已繳交
+    element text should be    class =jumbotron    105598002 Software Engineering Homework Area
+    element text should be    id=homeworkState_${homeworkName}    Upload
     Should Not Be Empty    id=submitTime_${homeworkName}
     [Teardown]    run keywords    Close browser    老師刪除作業並關閉    刪除上傳的作業
 
 課程底下沒有作業(CMS-TC14)
     [Setup]
     studentLogin
-    element text should be    class =jumbotron    105598002學生作業繳交區
+    element text should be    class =jumbotron    105598002 Online Classroom
     Click Element    id=enterSoftware Engineering
-    element text should be    class =jumbotron    105598002 Software Engineering作業區
+    element text should be    class =jumbotron    105598002 Software Engineering Homework Area
     Element Should Not Be Visible    id = ${homeworkName}
     [Teardown]    Close browser
 
@@ -202,14 +202,14 @@ ${fileDownloadPath}    ~/downloads
     [Setup]    老師新增作業並關閉
     Create File    ${fileUploadPath}/105598002_${homeworkName}.txt
     studentLogin
-    element text should be    class =jumbotron    105598002學生作業繳交區
+    element text should be    class =jumbotron    105598002 Online Classroom
     Click Element    id=enterSoftware Engineering
-    element text should be    class =jumbotron    105598002 Software Engineering作業區
-    element should contain    id=homeworkState_${homeworkName}    未繳交
+    element text should be    class =jumbotron    105598002 Software Engineering Homework Area
+    element should contain    id=homeworkState_${homeworkName}    Not Upload
     ${uploadtime}    get text    id=submitTime_${homeworkName}
     Should be equal    ${uploadtime}    ${EMPTY}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    Software Engineering ${homeworkName} 上傳作業區
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Click Element    id=oktoUpload
     ${loadFile} =    Execute JavaScript    return window.document.getElementById("uploadFile").getAttribute('oninvalid').includes("請選擇檔案");
     Should be true    ${loadFile}
@@ -221,26 +221,26 @@ ${fileDownloadPath}    ~/downloads
     [Setup]    老師新增作業並關閉
     Create File    ${fileUploadPath}/105598002_${homeworkName}.txt    This is a file that robotframework create for test.
     studentLogin
-    element text should be    class =jumbotron    105598002學生作業繳交區
+    element text should be    class =jumbotron    105598002 Online Classroom
     Click Element    id=enterSoftware Engineering
-    element text should be    class =jumbotron    105598002 Software Engineering作業區
-    element should contain    id=homeworkState_${homeworkName}    未繳交
+    element text should be    class =jumbotron    105598002 Software Engineering Homework Area
+    element should contain    id=homeworkState_${homeworkName}    Not Upload
     ${uploadtime}    get text    id=submitTime_${homeworkName}
     Should be equal    ${uploadtime}    ${EMPTY}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    Software Engineering ${homeworkName} 上傳作業區
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Choose file    id=uploadFile    ${fileUploadPath}/105598002_${homeworkName}.txt
     Click Element    id=oktoUpload
-    element text should be    class =jumbotron    105598002 Software Engineering作業區
-    element text should be    id=homeworkState_${homeworkName}    已繳交
+    element text should be    class =jumbotron    105598002 Software Engineering Homework Area
+    element text should be    id=homeworkState_${homeworkName}    Upload
     Should Not Be Empty    id=submitTime_${homeworkName}
     ${handintime_first}    get text    id=submitTime_${homeworkName}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    Software Engineering ${homeworkName} 上傳作業區
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     Choose file    id=uploadFile    ${fileUploadPath}/105598002_${homeworkName}.txt
     Click Element    id=oktoUpload
-    element text should be    class =jumbotron    105598002 Software Engineering作業區
-    element text should be    id=homeworkState_${homeworkName}    已繳交
+    element text should be    class =jumbotron    105598002 Software Engineering Homework Area
+    element text should be    id=homeworkState_${homeworkName}    Upload
     ${handintime_second}    get text    id=submitTime_${homeworkName}
     should not be equal    ${handintime_first}    ${handintime_second}
     [Teardown]    run keywords    Close browser    老師刪除作業並關閉    刪除上傳的作業
@@ -248,16 +248,16 @@ ${fileDownloadPath}    ~/downloads
 學生不能補教逾期作業
     [Setup]    老師新增逾期作業
     studentLogin
-    element text should be    class =jumbotron    105598002學生作業繳交區
+    element text should be    class =jumbotron    105598002 Online Classroom
     Click Element    id=enterSoftware Engineering
-    element text should be    class =jumbotron    105598002 Software Engineering作業區
-    element should contain    id=homeworkState_${homeworkName}    未繳交
+    element text should be    class =jumbotron    105598002 Software Engineering Homework Area
+    element should contain    id=homeworkState_${homeworkName}    Not Upload
     ${uploadtime}    get text    id=submitTime_${homeworkName}
     Should be equal    ${uploadtime}    ${EMPTY}
     Click Element    id=uploadhomework_${homeworkName}
-    element text should be    class =jumbotron    Software Engineering ${homeworkName} 上傳作業區
+    element text should be    class =jumbotron    105598002 Software Engineering\n ${homeworkName} Upload Homework Area
     ${alert}    get text    id = danger-alert
-    Should be equal    ${alert}    x\n上傳截止
+    Should be equal    ${alert}    x\nOverdue Submission.
     [Teardown]    run keywords    Close Browser    老師刪除作業並關閉
 
 使用者登入成功(UAMS-TC01)
@@ -296,7 +296,7 @@ ${fileDownloadPath}    ~/downloads
     input password    name = password    1209
     click button    id = Login
     Wait Until Element Is Visible    id = jumbotron    3s
-    Element Text Should Be    id = jumbotron    Course\nThis is a simple hero
+    Element Text Should Be    id = jumbotron    Course
     element Should Be Visible    id \ = \ course
     element Should Be Visible    id = gradesReport
     [Teardown]    close browser
@@ -311,7 +311,7 @@ ${fileDownloadPath}    ~/downloads
     input password    name = password    1209
     click button    id = Login
     Wait Until Element Is Visible    class = jumbotron    3s
-    Element Text Should Be    class = jumbotron    105598002學生作業繳交區
+    Element Text Should Be    class = jumbotron    105598002 Online Classroom
     element Should Be Visible    id = onlineClassroom
     [Teardown]    close browser
 
@@ -334,8 +334,8 @@ ${fileDownloadPath}    ~/downloads
     [Setup]    老師新增作業並關閉
     teacherLogin
     click element    id = gradesReport
-    click element    xpath = //*[@id="selectedHomework0"]/option[2]
-    ${selectedHomeworkName}=    Get Text    xpath = //*[@id="selectedHomework0"]/option[2]
+    click element    id= ${homeworkName}
+    ${selectedHomeworkName}=    Get Text    id= ${homeworkName}
     click element    id = SubmitBtn
     Element Should Be Visible    class = t1
     Element Should Be Visible    id = piechart
@@ -349,7 +349,7 @@ ${fileDownloadPath}    ~/downloads
     click element    id = gradesReport
     click element    id = SubmitBtn
     Wait Until Element Is Visible    id = danger-alert    3s
-    Element Text Should Be    id = danger-alert    you have not choice
+    Element Text Should Be    id = danger-alert    x\nPlease choose homework.
     [Teardown]    Run Keywords    close browser    老師刪除作業並關閉
 
 *** Keywords ***
@@ -410,7 +410,7 @@ go to login page
     close browser
 
 刪除上傳的作業
-    Remove File    C:/Users/User/Desktop/node-pass/homeworkCollection/105598002_${homeworkName}.txt
+    Remove File    ${fileUploadPath}/../homeworkCollection/105598002_${homeworkName}.txt
     Remove File    ${fileUploadPath}/105598002_${homeworkName}.txt
 
 刪除下載的作業

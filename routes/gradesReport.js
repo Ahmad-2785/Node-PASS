@@ -37,6 +37,40 @@ router.get('/', function(req, res){
 })
 
 router.get('/generate', function(req, res){
+    if(req.query.noSelect) {
+        req.flash('msg','Please choose homework.');
+        res.locals.messages = req.flash();
+        let homeworkCollections = []
+        HW.find({}).then(function(findHwResults){
+            findHwResults.forEach(function(result){
+                let eachHwinfo ={
+                courseName:result.courseName,
+                hwinfo:[{
+                          homeworkName:result.homeworkName,
+                          homework_id:result._id
+                       }]
+                }
+            //要把同一個課程下的作業都歸類在一起  
+            if(valueExists(homeworkCollections, result.courseName)==false){
+                homeworkCollections.push(eachHwinfo)
+            }
+            else{
+                for(let index=0 ; index<homeworkCollections.length; index++){
+                    if(homeworkCollections[index].courseName == result.courseName){
+                        homeworkCollections[index].hwinfo.push({
+                            homeworkName:result.homeworkName,
+                            homework_id:result._id
+                        })
+                    }
+                }
+            }
+            })
+            return homeworkCollections
+        }).then(function(homeworkCollections){
+            console.log(homeworkCollections)
+            res.render('gradesReportIndex', {title:'Grades Report', result : homeworkCollections})
+        })
+    }
     GradesDB.find({"homework_uuid" : req.query.homework_id}).then(function(result){
         let gradeRange = new Map();
         gradeRange.set("10",0)
