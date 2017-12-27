@@ -24,6 +24,9 @@ const GradeSchema = new Schema({
     },
     homeworkName:{
         type : String 
+    },
+     homeworkReport:{
+        type : String
     }
 })
 

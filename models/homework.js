@@ -29,7 +29,7 @@ const HwSchema = new Schema({
     },
     homeworkTestScriptPath:{
         type : String
-    },
+    }
 })
 
 const HW = mongoose.model('hwCollection',HwSchema)

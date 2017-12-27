@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('template:server');
 var http = require('http');
-
 /**
  * Get port from environment and store in Express.
  */
@@ -80,7 +79,10 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
+const HW = require('../models/homework')
+const studentDB = require('../models/student')
+var jenkinsapi = require('jenkins-api');
+var jenkins = jenkinsapi.init("http://leo:1209@localhost:8080");
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
@@ -88,4 +90,38 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log('Listening on '+bind)
+  let result=[]
+  let studentList=[]
+  // studentDB.find({role:'student'}).then(function(result){
+  //   for(let i=0; i<result.length; i++){
+  //     studentList.push(result[i].studentID)
+  //   }
+  // })
+
+  // HW.find({}).then(function(result){
+  //     let time =[]
+  //     setInterval(function(){
+  //     for(let i=0;i<result.length;i++){
+  //         if(overDeadline(result[i].dueDate)){
+  //           console.log(result[i].homeworkName)
+  //           for(let j=0 ;j<studentList.length;j++){
+
+  //          jenkins.disable_job(studentList[j]+'_'+result[i].homeworkName, function(err, data) {
+  //           if (err){ return console.log(err); }
+  //           console.log(data)
+  //         });
+  //           }
+  //       }
+  //   }},3000)
+  // })
+}
+
+
+function overDeadline(dueDate) {
+    let check  = Date.now();
+    let deadline = new Date(dueDate)
+    if(check > deadline) //過期
+      return true 
+    else //還沒到
+      return false
 }
