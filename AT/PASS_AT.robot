@@ -12,12 +12,15 @@ ${fileDownloadPath}    ~/downloads
     [Setup]    teacherLogin
     click element    id=Software Engineering
     click element    id=createHW
+    Wait Until Element Is Visible    id=InputhomeworkName    3s
     input text    id=InputhomeworkName    ${homeworkName}
     ${dueDate}=    get value    id=InputDueDateInAddHW
     input text    id=InputhwPercentage    10
     input text    id=InputhwFileExtension    txt
     input text    name=homeworkDescription    test
     click button    id=addHw
+    Reload Page
+    Wait Until Element Is Visible    id=${homeworkName}    3s
     element text should be    id=${homeworkName}    ${homeworkName}
     element text should be    id=HW${homeworkName}_dueDate    ${dueDate}
     element text should be    id=HW${homeworkName}_percentage    10
