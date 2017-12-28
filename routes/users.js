@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request-promise');
+const moment = require('moment');
 const GradesDB = require('../models/grades')
 
 /* GET users listing. */
@@ -22,8 +23,9 @@ router.get('/ping/byjenkins', function(req, res){
       json: true
   }).then(function(body){
     console.log(body)
+    let updateTime = moment(body.stats.start).format('YYYY/MM/DD,  H:mm:ss ')
     GradesDB.update({studentID : homeworkInfo.studentID, homeworkName : homeworkInfo.homeworkName},
-      {$set:{homeworkGrade : body.stats.passPercent, homeworkReport : baseurl.concat(jobName).concat("/ws/mochawesome-report/mochawesome.html")}}).then(function(result){
+      {$set:{homeworkGrade : body.stats.passPercent, submitTime: updateTime, homeworkState: 'Upload', homeworkReport : baseurl.concat(jobName).concat("/ws/mochawesome-report/mochawesome.html")}}).then(function(result){
         console.log(result)
         res.send('correct finish')
       })
