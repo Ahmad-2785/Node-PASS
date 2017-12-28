@@ -41,10 +41,7 @@ router.get('/', function(req, res){
 })
 
 router.get('/generate', function(req, res){
-    if(req.query.noSelect) 
-        res.redirect('/gradesReport?hasMsg=true')
-    else{
-
+    if(!req.query.noSelect) {
         GradesDB.find({"homework_uuid" : req.query.homework_id}).then(function(result){
             let gradeRange = new Map();
             gradeRange.set("10",0)
@@ -70,6 +67,8 @@ router.get('/generate', function(req, res){
            res.render('homeworkScore',{title: req.query.courseName, result: result, pieChartInfos: gradeRange})
         })
     }
+    else 
+        res.redirect('/gradesReport?hasMsg=true')
 })
 
 function valueExists(homeworkCollections, value){
